@@ -83,6 +83,121 @@ void MERGE_SORT(int *a,int p, int r){
         merge_sentinels(a, p, q, r);
     }
 }
+
+int binary_search(int *a, int p, int r, int val) {
+    int res;
+    if (p > r) {
+        return -1;
+    }
+    int q = (p + r) / 2;
+    if (a[q] == val) {
+        return q ;
+    }
+    else if (a[q] > val) {
+        return binary_search(a, p, q, val);
+    }
+    else {
+        return binary_search(a, q + 1, r, val);
+    }
+    
+
+}
+vector<int> twoSum(vector<int>& nums, int target) {
+    vector<int> res(2, -1);
+    res[0] = -1;
+    res[1] = -1;
+    int i = 0;
+    int j = nums.size() -1;
+    while (i < j) {
+        if (nums[i] + nums[j] == target) {
+            res[0] = i;
+            res[1] = j;
+            break;
+        }
+        else if (nums[i] + nums[j] < target) {
+            i++;
+        }
+        else {
+            j = j - 1;
+        }
+    }
+    
+    return res;
+}
+
+vector<int> twoSum_nonOrder(vector<int>& nums, int target) {
+    vector<int> res(2, -1);
+    res[0] = -1;
+    res[1] = -1;
+    for (int i = 0; i < nums.size(); i++) {
+        for (int j = i + 1; j < nums.size();j++) {
+            if (nums[i] + nums[j] == target) {
+                res[0] = i;
+                res[1] = j;
+                break;
+            }
+        }
+    }
+
+    return res;
+}
+struct ListNode {
+    int val;
+    ListNode *next;
+    ListNode(int x) : val(x), next(NULL) {}
+    
+};
+ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+    int carry = 0;
+    ListNode *p1 = l1;
+    ListNode *p2 = l2;
+    ListNode *res = new ListNode(0);
+    ListNode *res1 = res;
+    while (p1 != NULL && p2 != NULL) {
+
+        int temp = (p1->val + p2->val + carry) % 10;
+        carry = (p1->val + p2->val + carry) / 10;
+        ListNode *lis = new ListNode(temp);
+        res->next = lis;
+        res = res->next;
+
+
+        p1 = p1->next;
+        p2 = p2->next;
+    }
+
+    if (p1 != NULL && p2 == NULL) {
+        while (p1 != NULL) {
+            int temp = (p1->val + carry) % 10;
+            carry = (p1->val + carry) / 10;
+            ListNode *lis = new ListNode(temp);
+            res->next = lis;
+            res = res->next;
+            p1 = p1->next;
+        }
+
+    }
+    if (p1 == NULL && p2 != NULL) {
+        while (p2 != NULL) {
+            int temp = (p2->val + carry) % 10;
+            carry = (p2->val + carry) / 10;
+            ListNode *lis = new ListNode(temp);
+            res->next = lis;
+            res = res->next;
+            p2 = p2->next;
+        }
+    }
+    if (carry != 0) {
+        ListNode *lis = new ListNode(carry);
+        res->next = lis;
+    }
+
+
+
+    res1 = res1->next;
+    return res1;
+}
+
 int main(int argc, const char * argv[]) {
     // insert code here...
     //std::cout << "Hello, World!\n";
